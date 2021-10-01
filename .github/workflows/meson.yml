@@ -25,6 +25,7 @@ jobs:
             tools: false
             mesonflags: '--cross-file cross/android.gen.txt'
             arch: armv7a
+            shell: bash
 
           - name: 🤖 Android (release, armv64v8)
             os: ubuntu-20.04
@@ -33,6 +34,7 @@ jobs:
             tools: false
             mesonflags: '--cross-file cross/android.gen.txt'
             arch: aarch64
+            shell: bash
 
           - name: 🍏 iOS (release)
             os: macos-latest
@@ -40,6 +42,7 @@ jobs:
             target: release
             tools: false
             mesonflags: '--cross-file cross/iphone.txt'
+            shell: zsh
 
           - name: 🌐 JavaScript (minsize)
             os: ubuntu-20.04
@@ -48,6 +51,7 @@ jobs:
             tools: false
             meson: './meson-upstream/'
             mesonflags: '--cross-file cross/emscripten -Dbuiltin_pcre2_with_jit=false'
+            shell: bash
 
           - name: 🐧 Linux (debug, asan+ubsan, tests)
             os: ubuntu-20.04
@@ -56,6 +60,7 @@ jobs:
             tools: true
             tests: true
             mesonflags: -Dtests=true -Duse_asan=true -Duse_ubsan=true
+            shell: bash
 
           - name: 🐧 Linux (release_debug, tests)
             os: ubuntu-20.04
@@ -64,12 +69,14 @@ jobs:
             tools: true
             tests: true
             mesonflags: -Dtests=true
+            shell: bash
 
           - name: 🐧 Linux (release)
             os: ubuntu-20.04
             platform: linuxbsd
             target: release
             tools: false
+            shell: bash
 
           - name: 🍎 macOS (release_debug, tests)
             os: macos-latest
@@ -78,12 +85,14 @@ jobs:
             tools: true
             tests: true
             mesonflags: -Dtests=true
+            shell: zsh
 
           - name: 🍎 macOS (release)
             os: macos-latest
             platform: osx
             target: debugoptimized
             tools: false
+            shell: zsh
 
           - name: 🏁 Windows (release_debug, tests)
             os: windows-latest
@@ -92,12 +101,14 @@ jobs:
             tools: true
             tests: true
             mesonflags: -Dtests=true
+            shell: cmd
 
           - name: 🏁 Windows (release)
             os: windows-latest
             platform: windows
             target: release
             tools: false
+            shell: cmd
 
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
@@ -177,6 +188,7 @@ jobs:
           buildtype: ${{ matrix.target }}
           meson: ${{ matrix.meson }}meson
           tools: ${{ matrix.tools }}
+          shell: ${{ matrix.shell }}
 
       # Execute unit tests for the editor
       - name: Unit Tests
