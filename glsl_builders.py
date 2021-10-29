@@ -102,11 +102,10 @@ def include_file_in_rd_header(filename, header_data, depth):
     return header_data
 
 
-def build_rd_header(filename):
+def build_rd_header(filename, out_file):
     header_data = RDHeaderStruct()
     include_file_in_rd_header(filename, header_data, 0)
 
-    out_file = filename + ".gen.h"
     fd = open(out_file, "w")
 
     fd.write("/* WARNING, THIS FILE WAS GENERATED, DO NOT EDIT */\n")
@@ -164,8 +163,9 @@ def build_rd_header(filename):
 
 
 def build_rd_headers(target, source, env):
-    for x in source:
-        build_rd_header(str(x))
+    assert len(target) == len(source)
+    for i in range(len(source)):
+        build_rd_header(source[i], target[i])
 
 
 class RAWHeaderStruct:
@@ -195,11 +195,10 @@ def include_file_in_raw_header(filename, header_data, depth):
     fs.close()
 
 
-def build_raw_header(filename):
+def build_raw_header(filename, out_file):
     header_data = RAWHeaderStruct()
     include_file_in_raw_header(filename, header_data, 0)
 
-    out_file = filename + ".gen.h"
     fd = open(out_file, "w")
 
     fd.write("/* WARNING, THIS FILE WAS GENERATED, DO NOT EDIT */\n")
@@ -220,8 +219,9 @@ def build_raw_header(filename):
 
 
 def build_raw_headers(target, source, env):
-    for x in source:
-        build_raw_header(str(x))
+    assert len(target) == len(source)
+    for i in range(len(source)):
+        build_raw_header(str(source[i]), str(target[i]))
 
 
 if __name__ == "__main__":
