@@ -26,7 +26,13 @@ class RDHeaderStruct:
 
 
 def include_file_in_rd_header(filename, header_data, depth):
-    fs = open(filename, "r")
+    # This code implicitly assumes it is run in the source root,
+    # and that you can just open files like "thirdparty/foo/bar".
+    import os
+    if os.path.exists(filename):
+        fs = open(filename, "r")
+    else:
+        fs = open(os.path.join(os.getenv("MESON_SOURCE_ROOT"), filename), "r")
     line = fs.readline()
 
     while line:
