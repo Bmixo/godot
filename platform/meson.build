@@ -1,4 +1,3 @@
-
 _platform_apis = [
     'android',
     'javascript'
