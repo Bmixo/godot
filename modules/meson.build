@@ -34,7 +34,8 @@ module_dirs = ['basis_universal',
   'svg',
   'text_server_adv',
   'text_server_fb',
-  'tga',
+# See below
+#  'tga',
   'theora',
   'tinyexr',
   'upnp',
@@ -64,3 +65,12 @@ MAIN_SOURCES += configure_file(
     output: 'register_module_types.gen.cpp',
     command: [find_program('gen_registration.py'), '@OUTPUT@'] + MODULES_ENABLED,
     )
+
+# Now process external modules.
+external_modules = ['tga'] # In the real implementation this would come from a get_option().
+foreach extmod : external_modules
+    sp = subproject(extmod)
+    MODULE_DEPENDENCIES += sp.get_variable('module_dep')
+    MODULES_ENABLED += sp.get_variable('module_names')
+    # FIXME, add module paths and documentation paths here.
+endforeach
