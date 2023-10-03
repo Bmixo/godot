@@ -17,6 +17,8 @@ openxr_srcs += files(
      'extensions/openxr_pico_controller_extension.cpp',
      'extensions/openxr_vulkan_extension.cpp',
      'extensions/openxr_wmr_controller_extension.cpp',
+     'extensions/openxr_fb_foveation_extension.cpp',
+     'extensions/openxr_fb_update_swapchain_extension.cpp',
 )
 
 lib_module_openxr = library('module_openxr',
